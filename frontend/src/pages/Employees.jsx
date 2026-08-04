@@ -20,13 +20,15 @@ const Employees = () => {
     setTimeout(()=>{
       setLoading(false)
     }, 1000)
-  }, [])
-
-  const filtered = employees.filter((emp)=> `${emp.firstName} ${emp.lastName} ${emp.position}`.toLowerCase().includes(search.toLowerCase()))
+  }, [selectedDept])
 
   useEffect(()=>{
     fetchEmployees();
-  }, [])
+  }, [fetchEmployees])
+
+  const filtered = employees.filter((emp)=> `${emp.firstName} ${emp.lastName} ${emp.position}`.toLowerCase().includes(search.toLowerCase()))
+
+  
 
   return (
     <div className="animate-fade-in">
