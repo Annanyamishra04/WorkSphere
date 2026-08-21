@@ -3,7 +3,7 @@ import Employee from "../models/Employee.js";
 
 export const getProfile = async (req , res) => {
     try {
-        const session = session;
+        const session = req.session;
         const employee = await Employee.findOne({ userId: session.userId})
 
         if(!employee){

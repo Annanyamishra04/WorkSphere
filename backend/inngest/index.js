@@ -66,7 +66,7 @@ const leaveApplicationReminder = inngest.createFunction(
 
     await step.sleepUntil("wait-for-the-24-hours", new Date(new Date().getTime()+ 24 * 60 * 60 * 1000))
 
-    const LeaveApplication = await LeaveApplication.findById(leaveApplicationId)
+    const leaveApplication = await LeaveApplication.findById(leaveApplicationId)
 
     if(leaveApplication?.status === "PENDING"){
         const employee = await Employee.findById(leaveApplication.employeeId)
@@ -100,7 +100,7 @@ const attendanceReminderCron = inngest.createFunction(
   async ({ step}) =>{
     const today = await step.run("get-today-date", ()=>{
         const startUTC = new Date(new Date().toLocaleDateString("en-CA", {timeZone:"Asia/Kolkata"}) + 
-    "T00:00:00 +05:30");
+"T00:00:00+05:30");
     const endUTC = new Date(startUTC.getTime()+ 24 * 60 * 60 * 1000);
 
     return {startUTC: startUTC.toISOString(), endUTC: endUTC.toISOString()}
