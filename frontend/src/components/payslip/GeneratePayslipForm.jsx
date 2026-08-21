@@ -1,5 +1,7 @@
 import { Loader2, Plus, X } from 'lucide-react'
 import React, { useState } from 'react'
+import api from '../../api/axios'
+import toast from 'react-hot-toast'
 
 const GeneratePayslipForm = ({employees, onSuccess}) => {
 
@@ -14,6 +16,19 @@ const GeneratePayslipForm = ({employees, onSuccess}) => {
     )
     const handleSubmit = async(e) =>{
         e.preventDefault();
+        setLoading(true)
+        const formData = new FormData(e.currentTarget);
+        const data = Object.fromEntries(formData.entries())
+        try {
+            await api.post('/payslips', data)
+            setIsOpen(false)
+            onSuccess()
+        } catch (err) {
+            toast.error(err.response?.data?.error || err?.message);
+
+            
+        }
+        setLoading(false)
     }
   return (
     <div className='fixed inset-0 bg-black/40 backdrop-blur-sm flex
@@ -27,7 +42,7 @@ const GeneratePayslipForm = ({employees, onSuccess}) => {
                     <X size={20}/>
                 </button>
                 </div>
-                <form onClick={handleSubmit} className='space-y-4'>
+                <form onSubmit={handleSubmit} className='space-y-4'>
                     <div>
                         <label className='block text-sm font-mdeium text-slate-700 mb-2'>Employee</label>
                         <select name="employeeId" required>
@@ -80,7 +95,7 @@ const GeneratePayslipForm = ({employees, onSuccess}) => {
                                     Cancel
                                     </button>
 
-                                    <button disabled={loading} type='button'
+                                    <button disabled={loading} type='submit'
                                 className='btn-primary flex items-center'>
                                     {loading && <Loader2 className='w-4 h-4 mr-2 animate-spin' />}
                                     Generate
