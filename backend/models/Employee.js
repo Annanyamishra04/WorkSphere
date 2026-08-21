@@ -8,13 +8,13 @@ const employeeSchema = new mongoose.Schema({
     email: {type:String , required: true},
     phone: {type:String , required: true},
     position: {type:String , required: true},
-    baiscSalary: {type:Number , default:0},
+    basicSalary: {type:Number , default:0},
     allowances: {type:Number , default:0},
     deductions: {type:Number , default:0},
     employmentStatus :{type: String, enum: ["ACTIVE", "INACTIVE"], default: "ACTIVE"},
     joinDate: {type: Date, required: true},
     isDeleted: {type: Boolean, default: false},
-    bio: {type: String , deafult:""}, 
+    bio: {type: String , default:""}, 
     department : {type: String , enum: DEPARTMENTS}   
 
 }, {timestamps:true})

@@ -14,7 +14,7 @@ export const createLeave = async (req , res)=>{
 
         const {type, startDate, endDate, reason} = req.body;
 
-        if(!type || !startDate || !endDate || reason){
+        if(!type || !startDate || !endDate || !reason){
             return res.status(400).json({error: "Missing fields"});
         }
 
@@ -65,7 +65,7 @@ export const getLeaves = async (req , res)=>{
                 return {
                     ...obj,
                     id: obj._id.toString(),
-                    employee: obj.employeeId?._id?.toString(),
+                    employee: obj.employeeId,
                 }
             })
             return res.json({data})
@@ -94,7 +94,7 @@ export const getLeaves = async (req , res)=>{
 export const updateLeaveStatus = async (req , res)=>{
     try {
         const {status} = req.body;
-        if(!["APPRVOED", "REJECTED", "PENDING"].includes(status)){
+        if(!["APPROVED", "REJECTED", "PENDING"].includes(status)){
             return res.status(400).json({error: "Invalid status"});
         }
         const leave = await LeaveApplication.findByIdAndUpdate(req.params.id, {status}, {returnDocument: "after"})
