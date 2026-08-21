@@ -510,3 +510,7 @@ Cloud file storage
 Improved responsive design
 
 Automated CI/CD deployment
+
+## Author
+
+**Annanya**
